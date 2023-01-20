@@ -1,6 +1,6 @@
 package hu.lechnerkozpont.ambruspal.vehicle.interactor;
 
-public class Vehicle {
+public class VehicleClass {
     String registrationNumber;
     String make;
     String model;

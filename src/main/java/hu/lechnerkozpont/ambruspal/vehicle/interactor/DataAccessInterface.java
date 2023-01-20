@@ -1,7 +1,7 @@
 package hu.lechnerkozpont.ambruspal.vehicle.interactor;
 
 public interface DataAccessInterface {
-    void saveVehicle(VehicleClass newVehicleClass);
+    void saveVehicle(Vehicle newVehicle);
 
-    VehicleClass getVehicleByRegistrationNumber(String registrationNumber);
+    Vehicle getVehicleByRegistrationNumber(String registrationNumber);
 }

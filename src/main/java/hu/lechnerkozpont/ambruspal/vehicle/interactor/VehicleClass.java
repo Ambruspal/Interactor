@@ -7,7 +7,7 @@ public class VehicleClass {
     int numberOfSeats;
     String vehicleType;
 
-    VehicleClass(VehicleClass vehicleData) {
+    public VehicleClass(VehicleClass vehicleData) {
         this.registrationNumber = vehicleData.registrationNumber;
         this.make = vehicleData.make;
         this.model = vehicleData.model;

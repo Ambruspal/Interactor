@@ -1,13 +1,15 @@
-package hu.lechnerkozpont.ambruspal.vehicle.interactor;
+package hu.lechnerkozpont.ambruspal.vehicle.interactor.entity;
 
 public class Vehicle {
     String registrationNumber;
     String make;
     String model;
-    int numberOfSeats;
+    String numberOfSeats;
     String vehicleType;
 
-    public Vehicle(String registrationNumber, String make, String model, int numberOfSeats, String vehicleType) {
+    public Vehicle() {}
+
+    public Vehicle(String registrationNumber, String make, String model, String numberOfSeats, String vehicleType) {
         this.registrationNumber = registrationNumber;
         this.make = make;
         this.model = model;
@@ -39,11 +41,11 @@ public class Vehicle {
         this.model = model;
     }
 
-    public int getNumberOfSeats() {
+    public String getNumberOfSeats() {
         return numberOfSeats;
     }
 
-    public void setNumberOfSeats(int numberOfSeats) {
+    public void setNumberOfSeats(String numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
     }
 
@@ -54,6 +56,4 @@ public class Vehicle {
     public void setVehicleType(String vehicleType) {
         this.vehicleType = vehicleType;
     }
-
-
 }

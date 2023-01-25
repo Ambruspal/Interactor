@@ -23,32 +23,38 @@ public class VehicleInteractor implements VehicleRequestInterface {
     }
 
     @Override
-    public void findVehicleByRegistrationNumber(String id) {
-        vehicle = vehicleDataAccessGateway.getVehicleByRegistrationNumber(id);
+    public void findVehicleByRegistrationNumber(JSONObject jsonObject) {
+        String id = null;
+        try {
+            id = jsonObject.getString("registrationNumber");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Vehicle findVehicle = new Vehicle();
+        findVehicle.setRegistrationNumber(id);
+        String response = vehicleDataAccessGateway.getVehicleByRegistrationNumber(findVehicle);
     }
 
     @Override
-    public void saveVehicle(String json) {
-        if (json != null) {
-            JSONObject jsonObjectVehicle = this.getJsonObjectVehicleFromJsonString(json);
-            String responseFromDataAccessGateway = vehicleDataAccessGateway.saveVehicle(jsonObjectVehicle);
+    public void saveVehicle(JSONObject jsonObject) {
+        System.out.println("Interactor saveVehicle: " + jsonObject.toString());
 
-            if (responseFromDataAccessGateway == "Successfully Saved") vehicleDisplay.displaySuccessfullSave(responseFromDataAccessGateway);
-            if (responseFromDataAccessGateway == "Save failed!") vehicleDisplay.displayError(responseFromDataAccessGateway);
-        } else {
-            System.out.println("Error: Json string is null!");
-        }
-    }
-
-    private JSONObject getJsonObjectVehicleFromJsonString(String jsonVehicle) {
-        JSONObject jsonObject;
+        Vehicle newVehicle = new Vehicle();
 
         try {
-            jsonObject = new JSONObject(jsonVehicle);
-        } catch (JSONException exc) {
-            throw new InvalidJsonException();
+            newVehicle.setRegistrationNumber(jsonObject.getString("registrationNumber"));
+            newVehicle.setMake(jsonObject.getString("make"));
+            newVehicle.setModel(jsonObject.getString("model"));
+            newVehicle.setNumberOfSeats(jsonObject.getString("numberOfSeats"));
+            newVehicle.setVehicleType(jsonObject.getString("vehicleType"));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return jsonObject;
+            JSONObject responseFromDataAccessGateway = vehicleDataAccessGateway.saveVehicle(newVehicle);
+
+        vehicleDisplay.displaySave(responseFromDataAccessGateway);
+
     }
 }

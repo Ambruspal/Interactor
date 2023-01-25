@@ -1,9 +1,10 @@
 package hu.lechnerkozpont.ambruspal.vehicle.interactor.interfaces;
 
 import hu.lechnerkozpont.ambruspal.vehicle.interactor.entity.Vehicle;
+import org.json.JSONObject;
 
 public interface VehicleRequestInterface {
-    void findVehicleByRegistrationNumber(String json);
+    void findVehicleByRegistrationNumber(JSONObject jsonObject);
 
-    void saveVehicle(String json);
+    void saveVehicle(JSONObject jsonObject);
 }

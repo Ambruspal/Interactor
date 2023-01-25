@@ -4,7 +4,7 @@ import hu.lechnerkozpont.ambruspal.vehicle.interactor.entity.Vehicle;
 import org.json.JSONObject;
 
 public interface VehicleDataAccessInterface {
-    String saveVehicle(JSONObject jsonObjectVehicle);
+    JSONObject saveVehicle(Vehicle newVehicle);
 
-    Vehicle getVehicleByRegistrationNumber(String registrationNumber);
+    String getVehicleByRegistrationNumber(Vehicle findVehicle);
 }

@@ -1,7 +1,6 @@
 package hu.lechnerkozpont.ambruspal.vehicle.interactor;
 
 
-import hu.lechnerkozpont.ambruspal.vehicle.exception.InvalidJsonException;
 import hu.lechnerkozpont.ambruspal.vehicle.interactor.entity.Vehicle;
 import hu.lechnerkozpont.ambruspal.vehicle.interactor.interfaces.VehicleResponseInterface;
 import hu.lechnerkozpont.ambruspal.vehicle.interactor.interfaces.VehicleRequestInterface;
@@ -12,7 +11,6 @@ import org.json.JSONObject;
 public class VehicleInteractor implements VehicleRequestInterface {
     VehicleDataAccessInterface vehicleDataAccessGateway;
     VehicleResponseInterface vehicleDisplay;
-    Vehicle vehicle;
 
     public void setVehicleDisplay(VehicleResponseInterface vehiclePresenter) {
         this.vehicleDisplay = vehiclePresenter;
@@ -23,17 +21,29 @@ public class VehicleInteractor implements VehicleRequestInterface {
     }
 
     @Override
-    public void findVehicleByRegistrationNumber(JSONObject jsonObject) {
+    public void findVehicleByRegistrationNumber(String inputData) {
         String id = null;
         try {
+            JSONObject jsonObject = new JSONObject(inputData);
             id = jsonObject.getString("registrationNumber");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Vehicle findVehicle = new Vehicle();
-        findVehicle.setRegistrationNumber(id);
-        String response = vehicleDataAccessGateway.getVehicleByRegistrationNumber(findVehicle);
+        Vehicle response = vehicleDataAccessGateway.getVehicleByRegistrationNumber(id);
+        JSONObject jsonObjectVehicle = new JSONObject();
+
+        try {
+            jsonObjectVehicle.put("registrationNumber", response.getRegistrationNumber());
+            jsonObjectVehicle.put("make", response.getMake());
+            jsonObjectVehicle.put("model", response.getModel());
+            jsonObjectVehicle.put("numberOfSeats", response.getNumberOfSeats());
+            jsonObjectVehicle.put("vehicleType", response.getVehicleType());
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        vehicleDisplay.viewVehicleByRegistrationNumber(jsonObjectVehicle.toString());
     }
 
     @Override

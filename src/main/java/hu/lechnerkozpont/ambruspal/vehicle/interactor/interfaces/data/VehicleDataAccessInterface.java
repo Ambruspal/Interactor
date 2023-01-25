@@ -6,5 +6,5 @@ import org.json.JSONObject;
 public interface VehicleDataAccessInterface {
     JSONObject saveVehicle(Vehicle newVehicle);
 
-    String getVehicleByRegistrationNumber(Vehicle findVehicle);
+    Vehicle getVehicleByRegistrationNumber(String registrationNumber);
 }

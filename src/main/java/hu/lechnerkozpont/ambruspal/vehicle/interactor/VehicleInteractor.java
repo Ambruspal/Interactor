@@ -51,6 +51,7 @@ public class VehicleInteractor implements VehicleRequestInterface {
         System.out.println("Interactor saveVehicle: " + jsonObject.toString());
 
         Vehicle newVehicle = new Vehicle();
+        JSONObject jsonObjectResponse = new JSONObject();
 
         try {
             newVehicle.setRegistrationNumber(jsonObject.getString("registrationNumber"));
@@ -62,9 +63,17 @@ public class VehicleInteractor implements VehicleRequestInterface {
             e.printStackTrace();
         }
 
-            JSONObject responseFromDataAccessGateway = vehicleDataAccessGateway.saveVehicle(newVehicle);
-
-        vehicleDisplay.displaySave(responseFromDataAccessGateway);
-
+        try {
+            vehicleDataAccessGateway.saveVehicle(newVehicle);
+            jsonObjectResponse.put("message", "Save successful");
+            vehicleDisplay.displaySave(jsonObjectResponse.toString());
+        } catch (Exception e) {
+            try {
+                jsonObjectResponse.put("message", "Save failed!");
+                vehicleDisplay.displaySave(jsonObjectResponse.toString());
+            } catch (JSONException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 }
